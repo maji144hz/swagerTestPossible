@@ -4,36 +4,32 @@ const cloudinary = require("../utils/cloudinary");
 // 📌 CREATE: สร้างสินค้าใหม่
 exports.createProduct = async (req, res) => {
   try {
-      const { name, description, price, categoryId } = req.body;
+      const { productName, productDescription, categoryId, packSize, productStatus, barcodePack, barcodeUnit, quantity, purchasePrice, sellingPricePerUnit, sellingPricePerPack, expirationDate } = req.body;
 
       if (!req.file) {
           return res.status(400).json({ message: "Please upload a product image" });
       }
 
-      // อัพโหลดรูปภาพไปยัง Cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: "products"
-      });
-
       const newProduct = new ProductModel({
-          name,
-          description,
-          price,
+          productName,
+          productDescription,
+          productImage: req.file.path,  // ใช้ URL จาก Cloudinary
           categoryId,
-          productImage: result.secure_url
+          packSize,
+          productStatus,
+          barcodePack,
+          barcodeUnit,
+          quantity,
+          purchasePrice,
+          sellingPricePerUnit,
+          sellingPricePerPack,
+          expirationDate
       });
 
       await newProduct.save();
-      return res.status(201).json({ 
-          message: "Product created successfully", 
-          product: newProduct 
-      });
+      return res.status(201).json({ message: "Product created successfully", product: newProduct });
   } catch (error) {
-      console.error("Error creating product:", error);
-      return res.status(500).json({ 
-          message: "Error creating product",
-          error: error.message 
-      });
+      return res.status(500).json({ message: error.message });
   }
 };
 // 📌 READ: ดึงสินค้าทั้งหมด

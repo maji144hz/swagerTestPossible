@@ -7,10 +7,7 @@ const UserSchema = new Schema({
   phoneNumber: { type: String, default: null },
   address: { type: String, default: null },
   shopName: { type: String, default: null }
-}, { 
-  timestamps: true,
-  collection: 'users'
-});
+}, { timestamps: true });
 
 const UserModel = model("User", UserSchema);
 module.exports = UserModel

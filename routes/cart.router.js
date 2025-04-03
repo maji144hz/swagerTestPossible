@@ -1,26 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const {getAllCarts, createCart, getCartsByUserName, deleteAllCarts, updateCartById, deleteCartById, createCartWithBarcode} = require("../controllers/cart.controller");
+const {getAllCarts, createCart , getCartsByUserName, deleteAllCarts, updateCartById, deleteCartById, createCartWithBarcode} = require("../controllers/cart.controller");
 
-// #swagger.tags = ['Cart']
-router.post("/", createCart);
+router.post("/",createCart);
+router.post("/add-with-barcode",createCartWithBarcode);
+router.get("/",getAllCarts);
+router.get("/:userName",getCartsByUserName);
+router.put("/:id",updateCartById);
+router.delete("/deleteAllCarts/:userName",deleteAllCarts);
+router.delete("/:id",deleteCartById);
 
-// #swagger.tags = ['Cart']
-router.post("/add-with-barcode", createCartWithBarcode);
-
-// #swagger.tags = ['Cart']
-router.get("/", getAllCarts);
-
-// #swagger.tags = ['Cart']
-router.get("/:userName", getCartsByUserName);
-
-// #swagger.tags = ['Cart']
-router.put("/:id", updateCartById);
-
-// #swagger.tags = ['Cart']
-router.delete("/deleteAllCarts/:userName", deleteAllCarts);
-
-// #swagger.tags = ['Cart']
-router.delete("/:id", deleteCartById);
 
 module.exports = router;
